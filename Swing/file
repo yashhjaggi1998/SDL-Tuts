@@ -1,0 +1,125 @@
+// validation of input is pen ding
+import java.io.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+class login
+{
+    JFrame f;
+
+    login()
+    {
+        f = new JFrame("Login Form");
+        f.setSize(400,400);
+        f.setLayout(null);
+        f.setVisible(true);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    JButton addButton(String b_name,int x,int y)
+    {
+        JButton b = new JButton(b_name);
+        b.setBounds(x,y,95,30);
+        f.add(b);
+        return b;
+    }
+
+    JLabel addLabel(String l_text,int x,int y)
+    {
+        JLabel l = new JLabel(l_text);
+        l.setBounds(x,y,95,30);
+        f.add(l);
+        return l;
+    }
+
+    JTextField addTextField(int x,int y)
+    {
+        JTextField t;;
+        t = new JTextField();
+        t.setBounds(x,y,180,30);
+        f.add(t);
+        return t;
+    }
+
+    JPasswordField addPasswordField(int x,int y)
+    {
+        JPasswordField p;
+        p = new JPasswordField();
+        p.setBounds(x,y,180,30);
+        f.add(p);
+        return p;
+    }
+}
+
+public class swing 
+{
+    static JButton b1,b2,b3;
+    static JLabel l1,l2;
+    static JTextField t1;
+    static JPasswordField t2;
+
+    public static void main(String[] args) 
+    {
+        login l = new login(); 
+
+        b1 = l.addButton("Submit",30,200); 
+        b2 = l.addButton("Cancel",130,200);
+        b3 = l.addButton("Close",230,200);   
+
+        l1 = l.addLabel("Username",30,50);
+        l2 = l.addLabel("Password",30,90);
+
+        t1 = l.addTextField(130,50); //Username
+        t2 = l.addPasswordField(130,90); //"Password",
+
+        b1.addActionListener(new PerformAction());
+        b2.addActionListener(new PerformAction());
+        b3.addActionListener(new PerformAction());
+
+
+    }
+
+    static class PerformAction implements ActionListener
+    { 
+
+        public void actionPerformed(ActionEvent e)
+        {
+            String action = e.getActionCommand();
+            if(action.equals("Close"))
+                System.exit(0);
+            else if(action.equals("Submit"))
+            {
+                String Username = t1.getText();
+                int s,l,s1,l1;
+                s = Username.indexOf('@');
+                l = Username.lastIndexOf('@');
+                if(s == l && s != -1)  //valid halfusername => @
+                {
+                    s1 = Username.indexOf('.');
+                    l1 = Username.lastIndexOf('.');
+                    if(s == l && s != -1)  //valid username => .
+                    {
+                        System.out.println(Username);
+                    }
+                }
+                else 
+                {
+                    //add a label displaying error
+                }
+                String Password = new String(t2.getPassword());
+                if(Password.length() >= 8)
+                    System.out.println(Password);
+                else
+                {
+                    //add a label displaying error
+                }
+            }
+            else if(action.equals("Cancel"))
+            {
+                t1.setText("");
+                t2.setText("");
+            }
+        }
+    }
+}
